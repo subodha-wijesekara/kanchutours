@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Search, MapPin, Calendar, DollarSign } from "lucide-react";
 
 const BACKGROUNDS = [
   "/images/hero_sri_lanka_1775029955307.png",
@@ -15,6 +17,15 @@ const BACKGROUNDS = [
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
+  const [destination, setDestination] = useState("");
+  const [month, setMonth] = useState("");
+  const [budget, setBudget] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push(`/packages?dest=${destination}`);
+  };
 
   return (
     <div className="relative h-screen w-full min-h-[900px] flex items-center justify-center overflow-hidden bg-black font-sans">
@@ -94,16 +105,16 @@ export default function Hero() {
           </div>
         </div>
         
-        {/* Bottom Detailed Descriptions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16 mt-24 lg:mt-32 max-w-5xl text-[11px] lg:text-[13px] text-slate-300 leading-relaxed font-light tracking-wide">
+        {/* Bottom Descriptions */}
+        <div className="hidden md:grid grid-cols-3 gap-8 lg:gap-16 mt-16 max-w-4xl text-[11px] lg:text-[12px] text-slate-400 leading-relaxed font-light tracking-wide">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
-            Sigiriya Rock Fortress is an ancient palace located in the northern Matale District. The location of this mountain is precisely in the central plains.
+            Sigiriya Rock Fortress is an ancient palace in the northern Matale District.
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}>
-            Ella is a beautiful hillside village with tea plantations and waterfalls, in the southeastern part of the mainland hill country.
+            Ella — a hillside village with tea plantations and stunning waterfalls.
           </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}>
-            Yala National Park is a group of wildlife zones located in the southern coastal region of the island, famous for leopards.
+            Yala National Park, famous for leopards on the southern coastal region.
           </motion.div>
         </div>
 

@@ -16,74 +16,75 @@ export default function SearchBanner() {
   };
 
   return (
-    <div className="relative -mt-16 sm:-mt-24 z-20 px-4 w-full max-w-6xl mx-auto">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none p-6 md:p-8">
-        <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
+    <div className="w-full z-20 px-8 lg:px-16 max-w-[1400px] mx-auto -mt-24 pb-24 relative">
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5">
+        <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           
           {/* Destination */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-primary" /> Destination
+            <label className="text-[10px] font-bold text-white/60 uppercase tracking-[0.15em] flex items-center gap-2">
+              <MapPin className="w-3 h-3 text-primary" /> Destination
             </label>
-            <div className="relative">
-              <select 
-                title="Select Destination"
-                value={destination}
-                onChange={(e) => setDestination(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-800 border focus:ring-primary border-slate-200 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 appearance-none"
-              >
-                <option value="">Anywhere</option>
-                <option value="sigiriya">Sigiriya</option>
-                <option value="ella">Ella</option>
-                <option value="kandy">Kandy</option>
-                <option value="galle">Galle</option>
-                <option value="yala">Yala</option>
-              </select>
-            </div>
+            <select 
+              title="Select Destination"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              className="w-full bg-white/8 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/40 appearance-none cursor-pointer transition-colors"
+              style={{ background: "rgba(255,255,255,0.07)" }}
+            >
+              <option value="" className="bg-zinc-900">Anywhere</option>
+              <option value="sigiriya" className="bg-zinc-900">Sigiriya</option>
+              <option value="ella" className="bg-zinc-900">Ella</option>
+              <option value="kandy" className="bg-zinc-900">Kandy</option>
+              <option value="galle" className="bg-zinc-900">Galle</option>
+              <option value="yala" className="bg-zinc-900">Yala</option>
+            </select>
           </div>
 
           {/* Date / Month */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-primary" /> Month
+            <label className="text-[10px] font-bold text-white/60 uppercase tracking-[0.15em] flex items-center gap-2">
+              <Calendar className="w-3 h-3 text-primary" /> Month
             </label>
             <select 
               title="Select Month"
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
+              className="w-full border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/40 appearance-none cursor-pointer transition-colors"
+              style={{ background: "rgba(255,255,255,0.07)" }}
             >
-              <option value="">Any Month</option>
+              <option value="" className="bg-zinc-900">Any Month</option>
               {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m) => (
-                <option key={m} value={m}>{m}</option>
+                <option key={m} value={m} className="bg-zinc-900">{m}</option>
               ))}
             </select>
           </div>
 
           {/* Budget */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-slate-600 dark:text-slate-300 flex items-center gap-2">
-              <DollarSign className="w-4 h-4 text-primary" /> Budget
+            <label className="text-[10px] font-bold text-white/60 uppercase tracking-[0.15em] flex items-center gap-2">
+              <DollarSign className="w-3 h-3 text-primary" /> Budget
             </label>
             <select 
               title="Select Budget"
               value={budget}
               onChange={(e) => setBudget(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary appearance-none"
+              className="w-full border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/40 appearance-none cursor-pointer transition-colors"
+              style={{ background: "rgba(255,255,255,0.07)" }}
             >
-              <option value="">Any Budget</option>
-              <option value="low">Under $500</option>
-              <option value="medium">$500 - $1500</option>
-              <option value="high">Over $1500</option>
+              <option value="" className="bg-zinc-900">Any Budget</option>
+              <option value="low" className="bg-zinc-900">Under $500</option>
+              <option value="medium" className="bg-zinc-900">$500 - $1500</option>
+              <option value="high" className="bg-zinc-900">Over $1500</option>
             </select>
           </div>
 
           {/* Search Button */}
           <button 
             type="submit" 
-            className="w-full bg-primary hover:bg-primary-dark text-white rounded-lg px-6 py-3 font-semibold transition-colors flex justify-center items-center gap-2 h-[50px]"
+            className="w-full bg-primary hover:bg-primary-dark text-white rounded-lg px-6 py-3 font-bold text-sm transition-all hover:scale-[1.02] flex justify-center items-center gap-2 tracking-wider uppercase"
           >
-            <Search className="w-5 h-5" />
+            <Search className="w-4 h-4" />
             Find Tour
           </button>
           
