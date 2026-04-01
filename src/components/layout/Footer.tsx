@@ -3,7 +3,7 @@ import { Palmtree, Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 pt-16 pb-8">
+    <footer className="bg-zinc-950 border-t border-white/5 text-slate-300 pt-16 pb-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-12">
           
@@ -35,11 +35,11 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold text-lg mb-4">Quick Links</h3>
             <ul className="space-y-3">
-              <li><Link href="/destinations" className="text-sm hover:text-primary transition-colors">Destinations</Link></li>
-              <li><Link href="/packages" className="text-sm hover:text-primary transition-colors">Tour Packages</Link></li>
-              <li><Link href="/about" className="text-sm hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
-              <li><Link href="/book" className="text-sm hover:text-primary transition-colors">Book a Tour</Link></li>
+              <li><Link href="/destinations" className="text-sm text-white/60 hover:text-primary transition-colors">Destinations</Link></li>
+              <li><Link href="/packages" className="text-sm text-white/60 hover:text-primary transition-colors">Tour Packages</Link></li>
+              <li><Link href="/about" className="text-sm text-white/60 hover:text-primary transition-colors">About Us</Link></li>
+              <li><Link href="/contact" className="text-sm text-white/60 hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link href="/book" className="text-sm text-white/60 hover:text-primary transition-colors">Book a Tour</Link></li>
             </ul>
           </div>
 
@@ -70,7 +70,7 @@ export default function Footer() {
               <input 
                 type="email" 
                 placeholder="Your email address" 
-                className="w-full bg-slate-800 border-none rounded-l-md px-4 py-2.5 text-sm text-white focus:ring-2 focus:ring-primary focus:outline-none"
+                className="w-full bg-zinc-900 border border-white/10 border-r-0 rounded-l-md px-4 py-2.5 text-sm text-white placeholder-white/30 focus:ring-1 focus:ring-primary focus:outline-none"
                 required
               />
               <button 
@@ -84,7 +84,7 @@ export default function Footer() {
 
         </div>
 
-        <div className="border-t border-slate-800 pt-8 mt-8 text-center md:flex md:justify-between md:items-center">
+        <div className="border-t border-white/5 pt-8 mt-8 text-center md:flex md:justify-between md:items-center">
           <p className="text-sm text-slate-500">
             &copy; {new Date().getFullYear()} Kanchu Tours. All rights reserved.
           </p>

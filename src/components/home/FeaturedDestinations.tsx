@@ -111,12 +111,14 @@ export default function FeaturedDestinations() {
                 <Link
                   href={`/destinations/${dest.id.replace(/-\d+$/, "")}`}
                   key={`${dest.id}-${i}`}
-                  className={`group relative shrink-0 h-[420px] lg:h-[520px] overflow-hidden focus:outline-none transition-all duration-500
+                  className={`group relative shrink-0 overflow-hidden focus:outline-none transition-all duration-500
                     ${i === 0
-                      ? "w-[55%] sm:w-[45%] lg:w-[36%]"       // featured/large
+                      // Mobile: full width. sm+: featured large card
+                      ? "w-full sm:w-[45%] lg:w-[36%] h-[60vw] sm:h-[420px] lg:h-[520px]"
+                      // sm+: fill remaining space; hidden on mobile
                       : i < VISIBLE
-                        ? "hidden sm:block flex-1"             // regular
-                        : "hidden"                             // hidden overflow
+                        ? "hidden sm:block flex-1 h-[420px] lg:h-[520px]"
+                        : "hidden"
                     }`}
                 >
                   {/* Image */}
