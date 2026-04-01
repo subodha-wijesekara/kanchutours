@@ -2,74 +2,55 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, MapPin } from "lucide-react";
 import { destinations } from "@/data/destinations";
 
 export default function FeaturedDestinations() {
-  const featured = destinations.slice(0, 4);
-
   return (
-    <section className="py-20 px-4 bg-slate-50 dark:bg-slate-900/50">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div className="max-w-2xl">
-            <span className="text-primary font-bold tracking-wider uppercase text-sm mb-2 block">
-              Top Categories
-            </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-4">
-              Explore Popular Destinations
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400 text-lg">
-              From pristine beaches to lush green mountains, find your perfect escape in Sri Lanka.
-            </p>
-          </div>
-          <Link 
-            href="/destinations" 
-            className="flex items-center gap-2 text-primary font-semibold hover:text-primary-dark transition-colors shrink-0 group"
-          >
-            View all destinations 
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
+    <section className="pt-16 pb-32 bg-black relative w-full overflow-hidden font-sans">
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16 w-full flex flex-col items-center">
+        {/* Header matching image */}
+        <div className="text-center mb-16 space-y-1">
+          <p className="text-slate-400 text-[11px] lg:text-xs tracking-wide lowercase">confusion? these recommendation</p>
+          <h2 className="text-white text-xl lg:text-2xl font-bold tracking-tight lowercase">destination recommendations</h2>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featured.map((dest, index) => (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+        {/* Gallery Slider Layout */}
+        <div className="flex gap-4 w-full overflow-x-auto no-scrollbar pb-8 snap-x snap-mandatory">
+          {destinations.slice(0, 4).map((dest, index) => (
+            <Link 
+              href={`/destinations/${dest.id}`} 
               key={dest.id}
+              className="group relative min-w-[260px] md:min-w-[300px] lg:min-w-[340px] h-[400px] lg:h-[500px] shrink-0 snap-center focus:outline-none overflow-hidden"
             >
-              <Link href={`/destinations/${dest.id}`} className="block group">
-                <div className="relative h-[300px] w-full rounded-2xl overflow-hidden mb-4 shadow-lg">
+               {/* Vertical Image */}
+               <div className="relative w-full h-full filter grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700">
                   <Image
                     src={dest.image}
                     alt={dest.name}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                  
-                  <div className="absolute bottom-0 left-0 p-6 w-full">
-                    <span className="bg-primary text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full inline-block mb-3 shadow-md">
-                      {dest.category}
-                    </span>
-                    <h3 className="text-white text-2xl font-serif font-bold flex items-center gap-2 mb-1">
-                      {dest.name}
-                    </h3>
-                    <p className="text-slate-300 text-sm flex items-center gap-1 line-clamp-1">
-                      <MapPin className="w-3.5 h-3.5" /> Sri Lanka
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
+                  {/* Bottom Vignette gradient for text readability */}
+                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+               </div>
+               
+               {/* Overlay Text */}
+               <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center text-center px-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                  <h3 className="text-white text-lg lg:text-xl font-bold tracking-wide drop-shadow-md">
+                    {index + 1}{index === 0 ? 'st' : index === 1 ? 'nd' : index === 2 ? 'rd' : 'th'} place
+                  </h3>
+                  <p className="text-slate-300 text-[10px] lg:text-xs font-light mt-1.5 max-w-[200px] truncate tracking-wider">
+                    {dest.name} Sri Lanka
+                  </p>
+               </div>
+            </Link>
           ))}
+        </div>
+
+        {/* Bottom Lines */}
+        <div className="w-full flex justify-between gap-8 mt-16 px-4 md:px-16">
+           <div className="h-[1px] w-full bg-white/20"></div>
+           <div className="h-[1px] w-full bg-white/20"></div>
         </div>
       </div>
     </section>
