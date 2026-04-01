@@ -118,17 +118,87 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* SWIPE indicator */}
-        <motion.div 
-           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
-           className="mt-12 lg:mt-24 text-white font-bold tracking-[0.2em] text-[11px] lg:text-xs flex items-center gap-2 cursor-pointer hover:text-primary transition-colors uppercase"
+        {/* Inline Search Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0, duration: 0.6 }}
+          className="mt-10 w-full pointer-events-auto"
         >
-          SWIPE &gt;&gt;
+          <form onSubmit={handleSearch} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-end max-w-5xl">
+            {/* Destination */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[9px] font-bold text-white/50 uppercase tracking-[0.18em] flex items-center gap-1.5">
+                <MapPin className="w-2.5 h-2.5 text-primary" /> Destination
+              </label>
+              <select
+                title="Select Destination"
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+                className="w-full border border-white/10 rounded-lg px-3 py-2.5 text-white text-xs focus:outline-none focus:border-primary/60 appearance-none cursor-pointer"
+                style={{ background: "rgba(255,255,255,0.07)" }}
+              >
+                <option value="" className="bg-zinc-900">Anywhere</option>
+                <option value="sigiriya" className="bg-zinc-900">Sigiriya</option>
+                <option value="ella" className="bg-zinc-900">Ella</option>
+                <option value="kandy" className="bg-zinc-900">Kandy</option>
+                <option value="galle" className="bg-zinc-900">Galle</option>
+                <option value="yala" className="bg-zinc-900">Yala</option>
+              </select>
+            </div>
+
+            {/* Month */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[9px] font-bold text-white/50 uppercase tracking-[0.18em] flex items-center gap-1.5">
+                <Calendar className="w-2.5 h-2.5 text-primary" /> Month
+              </label>
+              <select
+                title="Select Month"
+                value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                className="w-full border border-white/10 rounded-lg px-3 py-2.5 text-white text-xs focus:outline-none focus:border-primary/60 appearance-none cursor-pointer"
+                style={{ background: "rgba(255,255,255,0.07)" }}
+              >
+                <option value="" className="bg-zinc-900">Any Month</option>
+                {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((m) => (
+                  <option key={m} value={m} className="bg-zinc-900">{m}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Budget */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[9px] font-bold text-white/50 uppercase tracking-[0.18em] flex items-center gap-1.5">
+                <DollarSign className="w-2.5 h-2.5 text-primary" /> Budget
+              </label>
+              <select
+                title="Select Budget"
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+                className="w-full border border-white/10 rounded-lg px-3 py-2.5 text-white text-xs focus:outline-none focus:border-primary/60 appearance-none cursor-pointer"
+                style={{ background: "rgba(255,255,255,0.07)" }}
+              >
+                <option value="" className="bg-zinc-900">Any Budget</option>
+                <option value="low" className="bg-zinc-900">Under $500</option>
+                <option value="medium" className="bg-zinc-900">$500 – $1500</option>
+                <option value="high" className="bg-zinc-900">Over $1500</option>
+              </select>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="w-full bg-primary hover:bg-primary-dark text-white rounded-lg px-5 py-2.5 font-bold text-xs tracking-widest uppercase transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+            >
+              <Search className="w-3.5 h-3.5" /> Find Tour
+            </button>
+          </form>
+
+          <div className="w-full h-[1px] bg-white/10 mt-8 relative">
+            <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-white/40"></div>
+          </div>
         </motion.div>
-        
-        <div className="w-full h-[1px] bg-white/10 mt-8 relative">
-          <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-white/40"></div>
-        </div>
+
         
       </div>
     </div>
