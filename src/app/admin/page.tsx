@@ -252,37 +252,30 @@ export default function AdminPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 mb-6 border-b border-black/5 dark:border-white/10">
+        <div className="flex flex-wrap gap-2 mb-6 border-b border-black/5 dark:border-white/10">
           <button 
             onClick={() => setActiveTab('contacts')}
             className={`px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all relative ${activeTab === 'contacts' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'}`}
           >
             Contact Messages
-            {activeTab === 'contacts' && <motion.div layoutId="tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
+            {activeTab === 'contacts' && <motion.div layoutId="admin-tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
           </button>
-              <button
-                onClick={() => setActiveTab('bookings')}
-                className={`pb-4 text-[10px] uppercase tracking-[0.3em] font-black transition-all relative ${
-                  activeTab === 'bookings' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'
-                }`}
-              >
-                Bookings
-                {activeTab === 'bookings' && (
-                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-                )}
-              </button>
-              
-              <button
-                onClick={() => setActiveTab('visitors')}
-                className={`pb-4 text-[10px] uppercase tracking-[0.3em] font-black transition-all relative ${
-                  activeTab === 'visitors' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'
-                }`}
-              >
-                Traffic Logs
-                {activeTab === 'visitors' && (
-                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-                )}
-              </button>
+          
+          <button
+            onClick={() => setActiveTab('bookings')}
+            className={`px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all relative ${activeTab === 'bookings' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'}`}
+          >
+            Bookings
+            {activeTab === 'bookings' && <motion.div layoutId="admin-tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
+          </button>
+          
+          <button
+            onClick={() => setActiveTab('visitors')}
+            className={`px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all relative ${activeTab === 'visitors' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'}`}
+          >
+            Traffic Logs
+            {activeTab === 'visitors' && <motion.div layoutId="admin-tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
+          </button>
         </div>
 
         {/* Content Table/List */}
