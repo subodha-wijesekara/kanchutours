@@ -115,8 +115,8 @@ export default function SearchBanner() {
   };
 
   return (
-    <div className="w-full z-20 px-8 lg:px-16 max-w-[1400px] mx-auto -mt-24 pb-24 relative">
-      <div className="bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-black/10 dark:border-white/10 border-t-2 border-t-primary shadow-sm dark:shadow-none">
+    <div className="w-full z-20 px-8 lg:px-16 max-w-[1400px] mx-auto -mt-16 relative">
+      <div className="bg-white/90 dark:bg-black/80 backdrop-blur-xl border border-black/10 dark:border-white/10 border-t-2 border-t-primary shadow-2xl shadow-black/5 dark:shadow-none">
         <form
           onSubmit={handleSearch}
           className="grid grid-cols-1 md:grid-cols-4 gap-0 items-end divide-y md:divide-y-0 md:divide-x divide-black/5 dark:divide-white/8"

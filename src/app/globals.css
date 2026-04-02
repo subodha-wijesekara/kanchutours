@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-primary: #ef4444; /* Vivid Red/Coral Accent from image */
   --color-primary-dark: #dc2626; 
@@ -18,7 +20,7 @@
 
 :root {
   /* Light mode defaults */
-  --background: #ffffff;
+  --background: #f8fafc;
   --foreground: #000000;
 }
 
