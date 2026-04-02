@@ -28,12 +28,26 @@ function BookingForm() {
     message:  "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setTimeout(() => {
-      setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 800);
+    try {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error || 'Booking request failed'}`);
+      }
+    } catch (error) {
+      console.error('Booking submission error:', error);
+      alert('An unexpected error occurred. Please try again.');
+    }
   };
 
   const handleChange = (

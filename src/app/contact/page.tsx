@@ -13,12 +13,26 @@ export default function ContactPage() {
   });
   const [isSent, setIsSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setTimeout(() => {
-      setIsSent(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 800);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setIsSent(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error || 'Failed to send message'}`);
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('An unexpected error occurred. Please try again.');
+    }
   };
 
   const handleChange = (
