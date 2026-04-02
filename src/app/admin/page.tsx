@@ -19,12 +19,22 @@ import {
   Search,
   Filter,
   LogOut,
-  Users as UsersIcon
+  Users as UsersIcon,
+  Activity,
+  Globe
 } from "lucide-react";
 
 type UserType = {
   email: string;
   role: 'admin' | 'superadmin';
+};
+
+type Visitor = {
+  _id: string;
+  ip: string;
+  userAgent: string;
+  count: number;
+  lastVisited: string;
 };
 
 type Submission = {
@@ -47,12 +57,13 @@ type Submission = {
 export default function AdminPage() {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
-  const [activeTab, setActiveTab] = useState<'contacts' | 'bookings'>('contacts');
+  const [activeTab, setActiveTab] = useState<'contacts' | 'bookings' | 'visitors'>('contacts');
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<{ contacts: Submission[], bookings: Submission[] }>({
     contacts: [],
     bookings: [],
   });
+  const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -78,8 +89,15 @@ export default function AdminPage() {
       if (result.success) {
         setData(result.data);
       }
+      
+      // Also fetch visitors
+      const vResponse = await fetch('/api/admin/visitors');
+      const vResult = await vResponse.json();
+      if (vResult.success) {
+        setVisitors(vResult.data);
+      }
     } catch (error) {
-      console.error("Failed to fetch submissions:", error);
+      console.error("Failed to fetch data:", error);
     } finally {
       setLoading(false);
       setIsRefreshing(false);
@@ -242,19 +260,75 @@ export default function AdminPage() {
             Contact Messages
             {activeTab === 'contacts' && <motion.div layoutId="tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
           </button>
-          <button 
-            onClick={() => setActiveTab('bookings')}
-            className={`px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all relative ${activeTab === 'bookings' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'}`}
-          >
-            Booking Requests
-            {activeTab === 'bookings' && <motion.div layoutId="tab-underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />}
-          </button>
+              <button
+                onClick={() => setActiveTab('bookings')}
+                className={`pb-4 text-[10px] uppercase tracking-[0.3em] font-black transition-all relative ${
+                  activeTab === 'bookings' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'
+                }`}
+              >
+                Bookings
+                {activeTab === 'bookings' && (
+                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+                )}
+              </button>
+              
+              <button
+                onClick={() => setActiveTab('visitors')}
+                className={`pb-4 text-[10px] uppercase tracking-[0.3em] font-black transition-all relative ${
+                  activeTab === 'visitors' ? 'text-primary' : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'
+                }`}
+              >
+                Traffic Logs
+                {activeTab === 'visitors' && (
+                  <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+                )}
+              </button>
         </div>
 
         {/* Content Table/List */}
         <div className="space-y-4">
           {loading ? (
             <div className="py-20 text-center animate-pulse text-slate-400 uppercase text-xs tracking-widest">Loading records...</div>
+          ) : activeTab === 'visitors' ? (
+            <div className="bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 overflow-hidden">
+               <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-[10px] uppercase font-black tracking-widest text-slate-500">
+                      <th className="p-6">IP Address</th>
+                      <th className="p-6">Browser / System</th>
+                      <th className="p-6">Visits</th>
+                      <th className="p-6 text-right">Last Seen</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-black/5 dark:divide-white/5">
+                    {visitors.map((visitor) => (
+                      <tr key={visitor._id} className="hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors group">
+                        <td className="p-6">
+                          <div className="flex items-center gap-3">
+                            <Globe className="w-4 h-4 text-primary" />
+                            <span className="text-sm font-black uppercase tracking-tight">{visitor.ip}</span>
+                          </div>
+                        </td>
+                        <td className="p-6">
+                          <p className="text-[10px] text-slate-500 uppercase tracking-wider truncate max-w-xs" title={visitor.userAgent}>
+                            {visitor.userAgent}
+                          </p>
+                        </td>
+                        <td className="p-6">
+                          <span className="bg-primary/10 text-primary text-[10px] font-black px-2 py-1 rounded">
+                            {visitor.count}
+                          </span>
+                        </td>
+                        <td className="p-6 text-right text-[10px] text-slate-400 uppercase font-black">
+                          {new Date(visitor.lastVisited).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           ) : filteredItems.length === 0 ? (
             <div className="py-20 text-center border border-dashed border-black/10 dark:border-white/10">
               <Inbox className="w-10 h-10 text-slate-200 dark:text-white/10 mx-auto mb-4" />
