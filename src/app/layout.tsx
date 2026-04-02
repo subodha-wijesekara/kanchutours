@@ -22,11 +22,14 @@ export const metadata: Metadata = {
   keywords: ["Sri Lanka travel", "tours", "budget travel", "luxury honeymoon", "Sri Lanka packages"],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Log visitor (server-side, non-blocking)
+  await logVisit();
+
   return (
     <html
       lang="en"
