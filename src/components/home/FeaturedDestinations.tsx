@@ -79,7 +79,7 @@ export default function FeaturedDestinations() {
 
   return (
     <section
-      className="pt-16 pb-20 bg-black relative w-full overflow-hidden font-sans"
+      className="pt-16 pb-20 bg-slate-50 dark:bg-black transition-colors duration-300 relative w-full overflow-hidden font-sans"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -87,8 +87,8 @@ export default function FeaturedDestinations() {
 
         {/* Header */}
         <div className="text-center mb-10 space-y-1">
-          <p className="text-slate-400 text-[11px] tracking-wide lowercase">confusion? these recommendation</p>
-          <h2 className="text-white text-xl lg:text-2xl font-bold tracking-tight lowercase">destination recommendations</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-[11px] tracking-wide lowercase">confusion? these recommendation</p>
+          <h2 className="text-slate-900 dark:text-white text-xl lg:text-2xl font-bold tracking-tight lowercase">destination recommendations</h2>
         </div>
 
         {/* Carousel track */}
@@ -158,7 +158,7 @@ export default function FeaturedDestinations() {
                 className={`transition-all duration-300 rounded-full ${
                   i === current
                     ? "w-6 h-1.5 bg-primary"
-                    : "w-1.5 h-1.5 bg-white/30 hover:bg-white/60"
+                    : "w-1.5 h-1.5 bg-black/20 dark:bg-white/30 hover:bg-black/40 dark:hover:bg-white/60"
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
@@ -169,23 +169,23 @@ export default function FeaturedDestinations() {
           <div className="flex items-center gap-3">
             <button
               onClick={prev}
-              className="w-10 h-10 rounded-full border border-white/20 hover:border-primary/60 bg-white/5 hover:bg-primary/10 flex items-center justify-center transition-all group"
+              className="w-10 h-10 rounded-full border border-black/10 dark:border-white/20 hover:border-primary/60 bg-black/5 dark:bg-white/5 hover:bg-primary/10 flex items-center justify-center transition-all group"
               aria-label="Previous"
             >
-              <ChevronLeft className="w-5 h-5 text-white/60 group-hover:text-primary transition-colors" />
+              <ChevronLeft className="w-5 h-5 text-slate-500 dark:text-white/60 group-hover:text-primary transition-colors" />
             </button>
             <button
               onClick={next}
-              className="w-10 h-10 rounded-full border border-white/20 hover:border-primary/60 bg-white/5 hover:bg-primary/10 flex items-center justify-center transition-all group"
+              className="w-10 h-10 rounded-full border border-black/10 dark:border-white/20 hover:border-primary/60 bg-black/5 dark:bg-white/5 hover:bg-primary/10 flex items-center justify-center transition-all group"
               aria-label="Next"
             >
-              <ChevronRight className="w-5 h-5 text-white/60 group-hover:text-primary transition-colors" />
+              <ChevronRight className="w-5 h-5 text-slate-500 dark:text-white/60 group-hover:text-primary transition-colors" />
             </button>
           </div>
         </div>
 
         {/* Bottom separator */}
-        <div className="w-full h-[1px] bg-white/10 mt-10 relative">
+        <div className="w-full h-[1px] bg-black/10 dark:bg-white/10 mt-10 relative">
           <motion.div
             className="absolute left-0 top-0 bottom-0 bg-primary/60 h-[1px]"
             animate={{ width: `${((current + 1) / SLIDES.length) * 100}%` }}

@@ -17,16 +17,15 @@
 }
 
 :root {
-  /* Force permanent dark mode luxury aesthetic */
-  --background: #000000;
-  --foreground: #ffffff;
+  /* Light mode defaults */
+  --background: #ffffff;
+  --foreground: #000000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ffffff;
-  }
+.dark {
+  /* Dark mode */
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 body {

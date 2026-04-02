@@ -17,25 +17,25 @@ export default function DestinationsPage() {
     : destinations.filter(d => d.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white font-sans transition-colors duration-300">
 
       {/* Hero Header */}
       <div className="pt-36 pb-12 px-8 lg:px-16 max-w-[1400px] mx-auto">
         <motion.p
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-          className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-4"
+          className="text-[10px] uppercase tracking-[0.3em] text-slate-500 dark:text-white/40 mb-4"
         >
           Explore · Sri Lanka
         </motion.p>
         <motion.h1
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl sm:text-7xl lg:text-[90px] font-black uppercase tracking-tighter leading-[0.9] text-white mb-8"
+          className="text-5xl sm:text-7xl lg:text-[90px] font-black uppercase tracking-tighter leading-[0.9] text-slate-900 dark:text-white mb-8"
         >
           Our<br /><span className="text-primary">Destinations</span>
         </motion.h1>
 
         {/* Separator */}
-        <div className="w-full h-[1px] bg-white/10 relative my-8">
+        <div className="w-full h-[1px] bg-black/10 dark:bg-white/10 relative my-8">
           <div className="absolute left-0 top-0 h-[1px] w-32 bg-primary/60" />
         </div>
 
@@ -44,7 +44,7 @@ export default function DestinationsPage() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
           className="flex flex-wrap gap-3 items-center"
         >
-          <span className="text-[10px] uppercase tracking-[0.2em] text-white/30 mr-2">Filter</span>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 mr-2">Filter</span>
           {CATEGORIES.map(cat => (
             <button
               key={cat}
@@ -52,7 +52,7 @@ export default function DestinationsPage() {
               className={`px-5 py-1.5 text-xs font-bold uppercase tracking-wider border transition-all duration-300 ${
                 activeCategory === cat
                   ? "bg-primary border-primary text-white"
-                  : "border-white/15 text-white/50 hover:border-white/40 hover:text-white bg-transparent"
+                  : "border-black/10 dark:border-white/15 text-slate-500 dark:text-white/50 hover:border-black/30 dark:hover:border-white/40 hover:text-slate-900 dark:hover:text-white bg-transparent"
               }`}
             >
               {cat}
@@ -121,7 +121,7 @@ export default function DestinationsPage() {
         </motion.div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-32 text-white/20 text-sm uppercase tracking-widest">
+          <div className="text-center py-32 text-slate-400 dark:text-white/20 text-sm uppercase tracking-widest">
             No destinations found.
           </div>
         )}

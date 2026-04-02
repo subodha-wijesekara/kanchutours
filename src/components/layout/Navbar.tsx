@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Palmtree } from "lucide-react";
+import { Menu, X, Palmtree, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/components/theme-provider";
 
 const NAV_LINKS = [
   { name: "Home", href: "/" },
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -35,7 +37,7 @@ export default function Navbar() {
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
         scrolled
-          ? "bg-black/95 backdrop-blur-md border-b border-white/8"
+          ? "bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-black/5 dark:border-white/8"
           : "bg-transparent"
       )}
     >
@@ -45,7 +47,10 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <Palmtree className="w-7 h-7 text-primary" />
-            <span className="font-black text-xl uppercase tracking-tight text-white">
+            <span className={cn(
+              "font-black text-xl uppercase tracking-tight transition-colors",
+              scrolled ? "text-slate-900 dark:text-white" : "text-white"
+            )}>
               Kanchu <span className="text-primary">Tours</span>
             </span>
           </Link>
@@ -56,6 +61,12 @@ export default function Navbar() {
               const isActive =
                 pathname === link.href ||
                 (link.href !== "/" && pathname?.startsWith(link.href));
+              
+              /* In light mode when Scrolled, text must be blackish. But if transparent, must be white. Dark mode always white. */
+              const linkColorObj = scrolled
+                ? "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white"
+                : "text-white/80 hover:text-white drop-shadow-md";
+
               return (
                 <Link
                   key={link.name}
@@ -63,8 +74,8 @@ export default function Navbar() {
                   className={cn(
                     "text-sm font-medium uppercase tracking-wider transition-colors duration-200",
                     isActive
-                      ? "text-primary"
-                      : "text-white/60 hover:text-white"
+                      ? "text-primary dark:text-primary drop-shadow-none"
+                      : linkColorObj
                   )}
                 >
                   {link.name}
@@ -77,13 +88,29 @@ export default function Navbar() {
             >
               Book Now
             </Link>
+
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={cn(
+                "ml-2 w-10 h-10 flex items-center justify-center transition-colors duration-200",
+                scrolled ? "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white" : "text-white/80 hover:text-white drop-shadow-md"
+              )}
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}
+            </button>
           </nav>
 
           {/* Mobile Menu Toggle */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-3">
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={cn("p-2 transition-colors", scrolled ? "text-slate-600 dark:text-white/70" : "text-white")}
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-white/70 hover:text-white transition-colors"
+              className={cn("p-2 transition-colors", scrolled ? "text-slate-600 dark:text-white/70" : "text-white/70 hover:text-white")}
               aria-label="Toggle Menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -111,10 +138,10 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     className={cn(
-                      "block px-3 py-3 text-sm font-medium uppercase tracking-wider transition-colors duration-200 border-b border-white/5",
+                      "block px-3 py-3 text-sm font-medium uppercase tracking-wider transition-colors duration-200 border-b border-black/5 dark:border-white/5",
                       isActive
                         ? "text-primary"
-                        : "text-white/50 hover:text-white"
+                        : "text-slate-600 hover:text-slate-900 dark:text-white/50 dark:hover:text-white"
                     )}
                   >
                     {link.name}

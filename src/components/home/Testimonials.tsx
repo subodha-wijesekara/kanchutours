@@ -61,7 +61,7 @@ export default function Testimonials() {
   const current = TESTIMONIALS[active];
 
   return (
-    <section className="bg-black py-24 px-8 lg:px-16 overflow-hidden">
+    <section className="bg-slate-50 dark:bg-black py-24 px-8 lg:px-16 overflow-hidden transition-colors duration-300">
       <div className="max-w-[1400px] mx-auto">
 
         {/* Section Header */}
@@ -70,7 +70,7 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-4"
+            className="text-[10px] uppercase tracking-[0.3em] text-slate-500 dark:text-white/40 mb-4"
           >
             Real Stories · Real Travelers
           </motion.p>
@@ -79,11 +79,11 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-white"
+            className="text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9] text-slate-900 dark:text-white"
           >
             Customer<br /><span className="text-primary">Feedbacks</span>
           </motion.h2>
-          <div className="w-full h-[1px] bg-white/10 relative mt-8">
+          <div className="w-full h-[1px] bg-black/10 dark:bg-white/10 relative mt-8">
             <div className="absolute left-0 top-0 h-[1px] w-32 bg-primary/60" />
           </div>
         </div>
@@ -92,12 +92,12 @@ export default function Testimonials() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-1">
 
           {/* Main Card */}
-          <div className="lg:col-span-3 border border-white/8 relative overflow-hidden min-h-[380px] flex flex-col">
+          <div className="lg:col-span-3 border border-black/5 dark:border-white/8 relative overflow-hidden min-h-[380px] flex flex-col bg-white dark:bg-transparent shadow-sm dark:shadow-none">
             {/* Red left accent */}
             <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary z-10" />
 
             {/* Large quote icon */}
-            <div className="absolute top-6 right-6 text-white/5">
+            <div className="absolute top-6 right-6 text-black/5 dark:text-white/5">
               <Quote className="w-20 h-20 fill-current" />
             </div>
 
@@ -118,25 +118,25 @@ export default function Testimonials() {
                 </div>
 
                 {/* Quote */}
-                <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light flex-1 mb-8">
+                <p className="text-slate-600 dark:text-white/80 text-lg md:text-xl leading-relaxed font-light flex-1 mb-8">
                   &ldquo;{current.text}&rdquo;
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                <div className="flex items-center gap-4 pt-6 border-t border-black/5 dark:border-white/10">
                   <div className="w-12 h-12 bg-primary flex items-center justify-center font-black text-white text-sm shrink-0">
                     {current.initials}
                   </div>
                   <div>
-                    <p className="font-black uppercase tracking-tight text-white text-sm">
+                    <p className="font-black uppercase tracking-tight text-slate-900 dark:text-white text-sm">
                       {current.name}
                     </p>
-                    <p className="text-white/40 text-xs uppercase tracking-wider mt-0.5">
+                    <p className="text-slate-500 dark:text-white/40 text-xs uppercase tracking-wider mt-0.5">
                       {current.country}
                     </p>
                   </div>
                   <div className="ml-auto">
-                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 border border-white/15 px-2.5 py-1">
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-white/30 border border-black/10 dark:border-white/15 px-2.5 py-1">
                       {current.tour}
                     </span>
                   </div>
@@ -146,13 +146,13 @@ export default function Testimonials() {
           </div>
 
           {/* Sidebar — all testimonials list */}
-          <div className="lg:col-span-2 border border-white/8 border-l-0 flex flex-col">
+          <div className="lg:col-span-2 border border-black/5 dark:border-white/8 lg:border-l-0 flex flex-col bg-white dark:bg-transparent shadow-sm dark:shadow-none">
             {TESTIMONIALS.map((t, i) => (
               <button
                 key={t.id}
                 onClick={() => setActive(i)}
-                className={`group flex items-center gap-4 px-6 py-5 text-left border-b border-white/8 last:border-b-0 transition-colors duration-300 relative ${
-                  i === active ? "bg-white/5" : "hover:bg-white/3"
+                className={`group flex items-center gap-4 px-6 py-5 text-left border-b border-black/5 dark:border-white/8 last:border-b-0 transition-colors duration-300 relative ${
+                  i === active ? "bg-slate-50 dark:bg-white/5" : "hover:bg-slate-50 dark:hover:bg-white/3"
                 }`}
               >
                 {/* Active indicator */}
@@ -164,42 +164,42 @@ export default function Testimonials() {
                 )}
                 <div
                   className={`w-10 h-10 flex items-center justify-center font-black text-xs shrink-0 transition-colors duration-300 ${
-                    i === active ? "bg-primary text-white" : "border border-white/15 text-white/40 group-hover:border-primary/60 group-hover:text-white"
+                    i === active ? "bg-primary text-white" : "border border-black/10 dark:border-white/15 text-slate-500 dark:text-white/40 group-hover:border-primary/60 group-hover:text-slate-900 dark:group-hover:text-white"
                   }`}
                 >
                   {t.initials}
                 </div>
                 <div className="min-w-0">
-                  <p className={`font-black uppercase tracking-tight text-xs transition-colors duration-300 ${i === active ? "text-white" : "text-white/50 group-hover:text-white"}`}>
+                  <p className={`font-black uppercase tracking-tight text-xs transition-colors duration-300 ${i === active ? "text-slate-900 dark:text-white" : "text-slate-500 dark:text-white/50 group-hover:text-slate-900 dark:group-hover:text-white"}`}>
                     {t.name}
                   </p>
-                  <p className="text-white/30 text-[10px] uppercase tracking-wider truncate mt-0.5">
+                  <p className="text-slate-400 dark:text-white/30 text-[10px] uppercase tracking-wider truncate mt-0.5">
                     {t.country} · {t.tour}
                   </p>
                 </div>
                 <div className="ml-auto flex gap-0.5 shrink-0">
                   {Array.from({ length: t.rating }).map((_, si) => (
-                    <Star key={si} className={`w-2.5 h-2.5 fill-current transition-colors ${i === active ? "text-primary" : "text-white/20"}`} />
+                    <Star key={si} className={`w-2.5 h-2.5 fill-current transition-colors ${i === active ? "text-primary" : "text-black/10 dark:text-white/20"}`} />
                   ))}
                 </div>
               </button>
             ))}
 
             {/* Nav controls */}
-            <div className="mt-auto border-t border-white/8 flex">
+            <div className="mt-auto border-t border-black/5 dark:border-white/8 flex">
               <button
                 onClick={prev}
-                className="flex-1 py-4 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 border-r border-white/8 transition-all duration-300"
+                className="flex-1 py-4 flex items-center justify-center text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5 border-r border-black/5 dark:border-white/8 transition-all duration-300"
                 aria-label="Previous"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <div className="flex items-center justify-center px-6 text-[10px] font-black uppercase tracking-widest text-white/30">
+              <div className="flex items-center justify-center px-6 text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-white/30">
                 {String(active + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
               </div>
               <button
                 onClick={next}
-                className="flex-1 py-4 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 border-l border-white/8 transition-all duration-300"
+                className="flex-1 py-4 flex items-center justify-center text-slate-500 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-white/5 border-l border-black/5 dark:border-white/8 transition-all duration-300"
                 aria-label="Next"
               >
                 <ChevronRight className="w-5 h-5" />

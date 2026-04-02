@@ -24,7 +24,7 @@ const WHY_ITEMS = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white font-sans transition-colors duration-300">
 
       {/* Hero Header */}
       <div className="pt-36 pb-12 px-8 lg:px-16 max-w-[1400px] mx-auto">
@@ -32,7 +32,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-4"
+          className="text-[10px] uppercase tracking-[0.3em] text-slate-500 dark:text-white/40 mb-4"
         >
           Kanchu Tours · Sri Lanka
         </motion.p>
@@ -40,13 +40,13 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl sm:text-7xl lg:text-[90px] font-black uppercase tracking-tighter leading-[0.9] text-white mb-8"
+          className="text-5xl sm:text-7xl lg:text-[90px] font-black uppercase tracking-tighter leading-[0.9] text-slate-900 dark:text-white mb-8"
         >
           About<br /><span className="text-primary">Us</span>
         </motion.h1>
 
         {/* Separator */}
-        <div className="w-full h-[1px] bg-white/10 relative my-8">
+        <div className="w-full h-[1px] bg-black/10 dark:bg-white/10 relative my-8">
           <div className="absolute left-0 top-0 h-[1px] w-32 bg-primary/60" />
         </div>
       </div>
@@ -57,7 +57,7 @@ export default function AboutPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-1 border border-white/8"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-1 border border-black/5 dark:border-white/8 shadow-sm dark:shadow-none bg-white dark:bg-transparent"
         >
           {/* Image */}
           <div className="relative h-[420px] lg:h-[560px] overflow-hidden">
@@ -72,18 +72,18 @@ export default function AboutPage() {
           </div>
 
           {/* Text */}
-          <div className="p-8 md:p-12 flex flex-col justify-center bg-black">
+          <div className="p-8 md:p-12 flex flex-col justify-center bg-white dark:bg-black transition-colors duration-300">
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-6 block">
               Our Story
             </span>
-            <h2 className="text-3xl lg:text-4xl font-black uppercase tracking-tight leading-tight text-white mb-6">
+            <h2 className="text-3xl lg:text-4xl font-black uppercase tracking-tight leading-tight text-slate-900 dark:text-white mb-6">
               Your Journey to the<br />
               <span className="text-primary">Pearl of the Indian Ocean</span>
             </h2>
-            <p className="text-white/50 text-sm leading-relaxed mb-4">
+            <p className="text-slate-600 dark:text-white/50 text-sm leading-relaxed mb-4">
               At Kanchu Tours, we believe that travel is more than just visiting a place—it&apos;s about immersing yourself in the culture, connecting with the locals, and creating memories that last a lifetime.
             </p>
-            <p className="text-white/50 text-sm leading-relaxed">
+            <p className="text-slate-600 dark:text-white/50 text-sm leading-relaxed">
               We are a team of passionate Sri Lankans dedicated to showing the world the true beauty of our island. With years of experience and deep local knowledge, we craft authentic travel experiences from sun-kissed beaches to misty mountains and ancient ruins.
             </p>
           </div>
@@ -98,7 +98,7 @@ export default function AboutPage() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-3"
+            className="text-[10px] uppercase tracking-[0.3em] text-slate-500 dark:text-white/40 mb-3"
           >
             Why Us
           </motion.p>
@@ -107,11 +107,11 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-tight"
+            className="text-4xl lg:text-5xl font-black uppercase tracking-tighter leading-tight text-slate-900 dark:text-white"
           >
             Why Choose<br /><span className="text-primary">Kanchu Tours</span>
           </motion.h2>
-          <div className="w-full h-[1px] bg-white/10 relative mt-8">
+          <div className="w-full h-[1px] bg-black/10 dark:bg-white/10 relative mt-8">
             <div className="absolute left-0 top-0 h-[1px] w-32 bg-primary/60" />
           </div>
         </div>
@@ -124,18 +124,18 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="group border border-white/8 hover:border-white/20 p-8 relative transition-colors duration-400"
+              className="group border border-black/5 dark:border-white/8 hover:border-black/15 dark:hover:border-white/20 p-8 relative transition-colors duration-400 bg-white dark:bg-transparent shadow-sm dark:shadow-none"
             >
               {/* Bottom accent bar */}
               <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
 
-              <div className="w-12 h-12 border border-white/15 flex items-center justify-center mb-6 group-hover:border-primary transition-colors duration-300">
+              <div className="w-12 h-12 border border-black/10 dark:border-white/15 flex items-center justify-center mb-6 group-hover:border-primary transition-colors duration-300">
                 <Icon className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="text-base font-black uppercase tracking-tight text-white mb-3 group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-base font-black uppercase tracking-tight text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors duration-300">
                 {title}
               </h3>
-              <p className="text-white/40 text-sm leading-relaxed">{desc}</p>
+              <p className="text-slate-600 dark:text-white/40 text-sm leading-relaxed">{desc}</p>
             </motion.div>
           ))}
         </div>
@@ -151,21 +151,21 @@ export default function AboutPage() {
           className="grid grid-cols-1 md:grid-cols-2 gap-1"
         >
           {/* Mission */}
-          <div className="border border-white/8 border-r-0 md:border-r p-8 md:p-12 relative group hover:border-white/20 transition-colors duration-300">
+          <div className="border border-black/5 dark:border-white/8 md:border-r-0 border-r-0 p-8 md:p-12 relative group hover:border-black/15 dark:hover:border-white/20 transition-colors duration-300 bg-white dark:bg-transparent shadow-sm dark:shadow-none">
             <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-4 block">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-white/40 mb-4 block">
               01
             </span>
-            <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-4">
+            <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-4">
               Our <span className="text-primary">Mission</span>
             </h3>
-            <p className="text-white/50 text-sm leading-relaxed">
+            <p className="text-slate-600 dark:text-white/50 text-sm leading-relaxed">
               To provide exceptional and sustainable travel experiences that showcase the unparalleled beauty, rich heritage, and vibrant culture of Sri Lanka, while supporting local communities.
             </p>
           </div>
 
           {/* Vision */}
-          <div className="border border-white/8 p-8 md:p-12 relative group hover:border-white/20 transition-colors duration-300">
+          <div className="border border-black/5 dark:border-white/8 p-8 md:p-12 relative group hover:border-black/15 dark:hover:border-white/20 transition-colors duration-300 bg-white dark:bg-transparent shadow-sm dark:shadow-none">
             <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary/40 group-hover:bg-primary transition-colors duration-300" />
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-4 block">
               02
