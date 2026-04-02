@@ -243,7 +243,9 @@ export default function UserManagementPage() {
                             Approve
                           </button>
                         )}
-                        
+                        {/* Role Toggle Action (Super Admin only can toggle others) */}
+                        {user.email !== currentUser.email && (
+                          <>
                             <button 
                               onClick={() => handlePasswordReset(user._id, user.email)}
                               disabled={actionLoading === user._id || user.status !== 'approved'}
