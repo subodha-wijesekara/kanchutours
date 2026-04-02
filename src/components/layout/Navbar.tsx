@@ -26,7 +26,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
@@ -34,34 +33,38 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-colors duration-300",
+        "fixed top-0 w-full z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-sm"
+          ? "bg-black/95 backdrop-blur-md border-b border-white/8"
           : "bg-transparent"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
+
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <Palmtree className={cn("w-8 h-8 text-primary", scrolled ? "" : "text-white drop-shadow-md")} />
-            <span className={cn("font-serif text-2xl font-bold tracking-tight", scrolled ? "text-foreground" : "text-white drop-shadow-md")}>
-              Kanchu <span className="text-secondary">Tours</span>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <Palmtree className="w-7 h-7 text-primary" />
+            <span className="font-black text-xl uppercase tracking-tight text-white">
+              Kanchu <span className="text-primary">Tours</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => {
-              const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
+              const isActive =
+                pathname === link.href ||
+                (link.href !== "/" && pathname?.startsWith(link.href));
               return (
                 <Link
                   key={link.name}
                   href={link.href}
                   className={cn(
-                    "font-medium transition-colors hover:text-primary",
-                    scrolled ? "text-foreground" : "text-white/90 hover:text-white drop-shadow-md",
-                    isActive && "text-primary dark:text-primary-dark font-semibold drop-shadow-none"
+                    "text-sm font-medium uppercase tracking-wider transition-colors duration-200",
+                    isActive
+                      ? "text-primary"
+                      : "text-white/60 hover:text-white"
                   )}
                 >
                   {link.name}
@@ -70,7 +73,7 @@ export default function Navbar() {
             })}
             <Link
               href="/book"
-              className="bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-full font-semibold transition-transform hover:scale-105"
+              className="bg-primary hover:bg-primary-dark text-white text-xs font-black uppercase tracking-widest px-6 py-2.5 transition-colors duration-300"
             >
               Book Now
             </Link>
@@ -80,7 +83,7 @@ export default function Navbar() {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={cn("p-2", scrolled ? "text-foreground" : "text-white")}
+              className="p-2 text-white/70 hover:text-white transition-colors"
               aria-label="Toggle Menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -96,20 +99,22 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white dark:bg-slate-900 shadow-xl border-t border-slate-100 dark:border-slate-800"
+            className="md:hidden bg-black border-t border-white/10 overflow-hidden"
           >
-            <div className="flex flex-col px-4 pt-2 pb-6 space-y-2">
+            <div className="flex flex-col px-6 pt-4 pb-8 space-y-1">
               {NAV_LINKS.map((link) => {
-                const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
+                const isActive =
+                  pathname === link.href ||
+                  (link.href !== "/" && pathname?.startsWith(link.href));
                 return (
                   <Link
                     key={link.name}
                     href={link.href}
                     className={cn(
-                      "block px-3 py-3 rounded-md text-base font-medium",
+                      "block px-3 py-3 text-sm font-medium uppercase tracking-wider transition-colors duration-200 border-b border-white/5",
                       isActive
-                        ? "bg-primary/10 text-primary"
-                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary"
+                        ? "text-primary"
+                        : "text-white/50 hover:text-white"
                     )}
                   >
                     {link.name}
@@ -118,7 +123,7 @@ export default function Navbar() {
               })}
               <Link
                 href="/book"
-                className="mt-4 w-full block text-center bg-primary hover:bg-primary-dark text-white px-5 py-3 rounded-md font-semibold"
+                className="mt-4 block text-center bg-primary hover:bg-primary-dark text-white text-xs font-black uppercase tracking-widest px-5 py-3.5 transition-colors duration-300"
               >
                 Book Now
               </Link>
