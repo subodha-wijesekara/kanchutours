@@ -51,7 +51,7 @@ export default function Navbar() {
               "font-black text-xl uppercase tracking-tight transition-colors",
               scrolled
                 ? "text-slate-900 dark:text-white"
-                : pathname === "/"
+                : (pathname === "/" || pathname?.startsWith("/destinations/"))
                   ? "text-white dark:text-white"
                   : "text-slate-900 dark:text-white"
             )}>
@@ -66,11 +66,11 @@ export default function Navbar() {
                 pathname === link.href ||
                 (link.href !== "/" && pathname?.startsWith(link.href));
               
-              /* On home page, hero is a dark image so keep white. On other pages background is light. */
-              const isHome = pathname === "/";
+              /* Pages with full-bleed dark hero images need white links */
+              const hasDarkHero = pathname === "/" || pathname?.startsWith("/destinations/");
               const linkColorObj = scrolled
                 ? "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white"
-                : isHome
+                : hasDarkHero
                   ? "text-white/80 hover:text-white drop-shadow-md dark:text-white/80 dark:hover:text-white"
                   : "text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white drop-shadow-sm";
 
