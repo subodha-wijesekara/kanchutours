@@ -245,7 +245,7 @@ export default function UserManagementPage() {
                         )}
                         {/* Role Toggle Action (Super Admin only can toggle others) */}
                         {user.email !== currentUser.email && (
-                          <>
+                          <div className="flex items-center gap-2">
                             <button 
                               onClick={() => handlePasswordReset(user._id, user.email)}
                               disabled={actionLoading === user._id || user.status !== 'approved'}
@@ -270,7 +270,7 @@ export default function UserManagementPage() {
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
-                          </>
+                          </div>
                         )}
                       </div>
                     </td>
