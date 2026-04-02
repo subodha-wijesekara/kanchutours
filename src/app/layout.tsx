@@ -3,7 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import { logVisit } from "@/lib/tracker";
+import VisitorTracker from "@/components/analytics/VisitorTracker";
 import "./globals.css";
 
 const inter = Inter({
@@ -22,23 +22,22 @@ export const metadata: Metadata = {
   keywords: ["Sri Lanka travel", "tours", "budget travel", "luxury honeymoon", "Sri Lanka packages"],
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Log visitor (server-side, non-blocking)
-  await logVisit();
-
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable} scroll-smooth antialiased`}
+      className={`${inter.variable} ${playfair.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-screen flex-col font-sans transition-colors duration-300">
+      <body className="antialiased bg-slate-50 dark:bg-black font-sans">
         <ThemeProvider>
+          <VisitorTracker />
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="min-h-screen">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

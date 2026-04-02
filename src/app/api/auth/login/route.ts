@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+// @ts-ignore
 import bcrypt from 'bcryptjs';
 import { SignJWT } from 'jose';
 import dbConnect from '@/lib/mongodb';

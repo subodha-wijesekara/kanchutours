@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
+// @ts-ignore
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/mongodb';
 import User from '@/models/User';
