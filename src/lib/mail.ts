@@ -17,6 +17,15 @@ type EmailOptions = {
 };
 
 export async function sendMail({ to, subject, html }: EmailOptions) {
+  // Check for environment variables
+  const requiredEnvVars = ['EMAIL_SERVER', 'EMAIL_PORT', 'EMAIL_USER', 'EMAIL_PASSWORD'];
+  const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+  if (missingEnvVars.length > 0) {
+    console.error(`❌ MAIL ERROR: Missing environment variables: ${missingEnvVars.join(', ')}`);
+    return { success: false, error: 'Missing configuration' };
+  }
+
   try {
     const info = await transporter.sendMail({
       from: `"Kanchu Tours" <${process.env.EMAIL_USER}>`,
@@ -24,9 +33,10 @@ export async function sendMail({ to, subject, html }: EmailOptions) {
       subject,
       html,
     });
+    console.log(`✅ EMAIL SUCCESS: Sent to ${to}. Message ID: ${info.messageId}`);
     return { success: true, messageId: info.messageId };
   } catch (error) {
-    console.error('Email Error:', error);
+    console.error(`❌ EMAIL ERROR (Sending to ${to}):`, error);
     return { success: false, error };
   }
 }
