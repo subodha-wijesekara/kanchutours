@@ -6,7 +6,7 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'fallback-secret-if-missing'
 );
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Paths that don't require authentication
@@ -32,7 +32,7 @@ export async function middleware(request: NextRequest) {
   }
 }
 
-// Config to limit middleware to specific paths
+// Config to limit execution to specific paths
 export const config = {
   matcher: ['/admin/:path*'],
 };
