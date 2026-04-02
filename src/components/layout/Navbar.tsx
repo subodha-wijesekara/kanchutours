@@ -49,7 +49,7 @@ export default function Navbar() {
             <Palmtree className="w-7 h-7 text-primary" />
             <span className={cn(
               "font-black text-xl uppercase tracking-tight transition-colors",
-              scrolled ? "text-slate-900 dark:text-white" : "text-white"
+              scrolled ? "text-slate-900 dark:text-white" : "text-slate-900 dark:text-white"
             )}>
               Kanchu <span className="text-primary">Tours</span>
             </span>
@@ -62,10 +62,10 @@ export default function Navbar() {
                 pathname === link.href ||
                 (link.href !== "/" && pathname?.startsWith(link.href));
               
-              /* In light mode when Scrolled, text must be blackish. But if transparent, must be white. Dark mode always white. */
+              /* In light mode when Scrolled, text must be blackish. Dark mode always white. */
               const linkColorObj = scrolled
                 ? "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white"
-                : "text-white/80 hover:text-white drop-shadow-md";
+                : "text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white drop-shadow-sm";
 
               return (
                 <Link
@@ -74,7 +74,7 @@ export default function Navbar() {
                   className={cn(
                     "text-sm font-medium uppercase tracking-wider transition-colors duration-200",
                     isActive
-                      ? "text-primary dark:text-primary drop-shadow-none"
+                      ? "text-primary"
                       : linkColorObj
                   )}
                 >
@@ -93,7 +93,7 @@ export default function Navbar() {
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className={cn(
                 "ml-2 w-10 h-10 flex items-center justify-center transition-colors duration-200",
-                scrolled ? "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white" : "text-white/80 hover:text-white drop-shadow-md"
+                scrolled ? "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white" : "text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white"
               )}
             >
               {theme === 'dark' ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}
@@ -104,13 +104,13 @@ export default function Navbar() {
           <div className="md:hidden flex items-center gap-3">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className={cn("p-2 transition-colors", scrolled ? "text-slate-600 dark:text-white/70" : "text-white")}
+              className={cn("p-2 transition-colors", scrolled ? "text-slate-600 dark:text-white/70" : "text-slate-700 dark:text-white")}
             >
               {theme === 'dark' ? <Sun className="w-5 h-5"/> : <Moon className="w-5 h-5"/>}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={cn("p-2 transition-colors", scrolled ? "text-slate-600 dark:text-white/70" : "text-white/70 hover:text-white")}
+              className={cn("p-2 transition-colors", scrolled ? "text-slate-600 dark:text-white/70" : "text-slate-700 dark:text-white/70 hover:text-slate-900 dark:hover:text-white")}
               aria-label="Toggle Menu"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
