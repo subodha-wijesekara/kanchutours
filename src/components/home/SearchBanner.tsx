@@ -1,14 +1,113 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Search, MapPin, Calendar, DollarSign } from "lucide-react";
+import { Search, MapPin, Calendar, DollarSign, ChevronDown } from "lucide-react";
 
+/* ── Custom Dropdown ── */
+type DropdownOption = { value: string; label: string };
+
+function CustomDropdown({
+  icon: Icon,
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  icon: React.ElementType;
+  label: string;
+  options: DropdownOption[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const selected = options.find((o) => o.value === value) ?? options[0];
+
+  return (
+    <div className="flex flex-col gap-2" ref={ref}>
+      {/* Label */}
+      <label className="text-[10px] font-black text-white/80 uppercase tracking-[0.2em] flex items-center gap-2">
+        <Icon className="w-3 h-3 text-primary" />
+        {label}
+      </label>
+
+      {/* Trigger */}
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={`w-full bg-white/5 border px-4 py-3 text-white text-sm text-left flex items-center justify-between transition-colors duration-200 ${
+          open ? "border-primary" : "border-white/15 hover:border-white/30"
+        }`}
+      >
+        <span className={value ? "text-white" : "text-white/40"}>{selected.label}</span>
+        <ChevronDown
+          className={`w-4 h-4 text-white/40 transition-transform duration-200 ${open ? "rotate-180 text-primary" : ""}`}
+        />
+      </button>
+
+      {/* Options list */}
+      {open && (
+        <div className="absolute z-50 mt-1 w-full bg-black border border-white/15 border-t-primary shadow-xl shadow-black/60">
+          {options.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => { onChange(opt.value); setOpen(false); }}
+              className={`w-full text-left px-4 py-2.5 text-sm transition-colors duration-150 ${
+                opt.value === value
+                  ? "bg-primary text-white font-bold"
+                  : "text-white/60 hover:bg-white/8 hover:text-white"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Options data ── */
+const DESTINATIONS: DropdownOption[] = [
+  { value: "",         label: "Anywhere"  },
+  { value: "sigiriya", label: "Sigiriya"  },
+  { value: "ella",     label: "Ella"      },
+  { value: "kandy",    label: "Kandy"     },
+  { value: "galle",    label: "Galle"     },
+  { value: "yala",     label: "Yala"      },
+];
+
+const MONTHS: DropdownOption[] = [
+  { value: "", label: "Any Month" },
+  ...["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+    .map((m) => ({ value: m, label: m })),
+];
+
+const BUDGETS: DropdownOption[] = [
+  { value: "",       label: "Any Budget"   },
+  { value: "low",    label: "Under $500"   },
+  { value: "medium", label: "$500 – $1500" },
+  { value: "high",   label: "Over $1500"   },
+];
+
+/* ── Main component ── */
 export default function SearchBanner() {
   const router = useRouter();
   const [destination, setDestination] = useState("");
-  const [month, setMonth] = useState("");
-  const [budget, setBudget] = useState("");
+  const [month, setMonth]             = useState("");
+  const [budget, setBudget]           = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,77 +116,57 @@ export default function SearchBanner() {
 
   return (
     <div className="w-full z-20 px-8 lg:px-16 max-w-[1400px] mx-auto -mt-24 pb-24 relative">
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5">
-        <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-          
+      <div className="bg-black/80 backdrop-blur-xl border border-white/10 border-t-2 border-t-primary">
+        <form
+          onSubmit={handleSearch}
+          className="grid grid-cols-1 md:grid-cols-4 gap-0 items-end divide-x divide-white/8"
+        >
           {/* Destination */}
-          <div className="flex flex-col gap-2">
-            <label className="text-[10px] font-bold text-white/60 uppercase tracking-[0.15em] flex items-center gap-2">
-              <MapPin className="w-3 h-3 text-primary" /> Destination
-            </label>
-            <select 
-              title="Select Destination"
+          <div className="relative p-5">
+            <CustomDropdown
+              icon={MapPin}
+              label="Destination"
+              options={DESTINATIONS}
               value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              className="w-full bg-white/8 border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/40 appearance-none cursor-pointer transition-colors"
-              style={{ background: "rgba(255,255,255,0.07)" }}
-            >
-              <option value="" className="bg-zinc-900">Anywhere</option>
-              <option value="sigiriya" className="bg-zinc-900">Sigiriya</option>
-              <option value="ella" className="bg-zinc-900">Ella</option>
-              <option value="kandy" className="bg-zinc-900">Kandy</option>
-              <option value="galle" className="bg-zinc-900">Galle</option>
-              <option value="yala" className="bg-zinc-900">Yala</option>
-            </select>
+              onChange={setDestination}
+            />
           </div>
 
-          {/* Date / Month */}
-          <div className="flex flex-col gap-2">
-            <label className="text-[10px] font-bold text-white/60 uppercase tracking-[0.15em] flex items-center gap-2">
-              <Calendar className="w-3 h-3 text-primary" /> Month
-            </label>
-            <select 
-              title="Select Month"
+          {/* Month */}
+          <div className="relative p-5">
+            <CustomDropdown
+              icon={Calendar}
+              label="Month"
+              options={MONTHS}
               value={month}
-              onChange={(e) => setMonth(e.target.value)}
-              className="w-full border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/40 appearance-none cursor-pointer transition-colors"
-              style={{ background: "rgba(255,255,255,0.07)" }}
-            >
-              <option value="" className="bg-zinc-900">Any Month</option>
-              {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((m) => (
-                <option key={m} value={m} className="bg-zinc-900">{m}</option>
-              ))}
-            </select>
+              onChange={setMonth}
+            />
           </div>
 
           {/* Budget */}
-          <div className="flex flex-col gap-2">
-            <label className="text-[10px] font-bold text-white/60 uppercase tracking-[0.15em] flex items-center gap-2">
-              <DollarSign className="w-3 h-3 text-primary" /> Budget
-            </label>
-            <select 
-              title="Select Budget"
+          <div className="relative p-5">
+            <CustomDropdown
+              icon={DollarSign}
+              label="Budget"
+              options={BUDGETS}
               value={budget}
-              onChange={(e) => setBudget(e.target.value)}
-              className="w-full border border-white/10 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/40 appearance-none cursor-pointer transition-colors"
-              style={{ background: "rgba(255,255,255,0.07)" }}
-            >
-              <option value="" className="bg-zinc-900">Any Budget</option>
-              <option value="low" className="bg-zinc-900">Under $500</option>
-              <option value="medium" className="bg-zinc-900">$500 - $1500</option>
-              <option value="high" className="bg-zinc-900">Over $1500</option>
-            </select>
+              onChange={setBudget}
+            />
           </div>
 
           {/* Search Button */}
-          <button 
-            type="submit" 
-            className="w-full bg-primary hover:bg-primary-dark text-white rounded-lg px-6 py-3 font-bold text-sm transition-all hover:scale-[1.02] flex justify-center items-center gap-2 tracking-wider uppercase"
-          >
-            <Search className="w-4 h-4" />
-            Find Tour
-          </button>
-          
+          <div className="p-5">
+            <label className="text-[10px] font-black text-transparent uppercase tracking-[0.2em] mb-2 block select-none">
+              &nbsp;
+            </label>
+            <button
+              type="submit"
+              className="w-full bg-primary hover:bg-primary-dark text-white px-6 py-3 font-black text-xs uppercase tracking-widest transition-colors duration-300 flex justify-center items-center gap-2"
+            >
+              <Search className="w-4 h-4" />
+              Find Tour
+            </button>
+          </div>
         </form>
       </div>
     </div>
