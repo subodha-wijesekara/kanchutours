@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +15,14 @@ const BACKGROUNDS = [
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto-advance background every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % BACKGROUNDS.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="relative h-screen w-full min-h-[900px] flex items-center justify-center overflow-hidden bg-black font-sans">
@@ -70,7 +78,7 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-[100px] sm:text-[130px] md:text-[160px] lg:text-[200px] font-black text-white leading-[0.85] tracking-tighter uppercase"
+            className="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black text-white leading-[0.85] tracking-tighter uppercase"
           >
             Visit<br/>Sri Lanka
           </motion.h1>
