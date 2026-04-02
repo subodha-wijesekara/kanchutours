@@ -102,7 +102,7 @@ export default function Navbar() {
                 "ml-2 w-10 h-10 flex items-center justify-center transition-colors duration-200",
                 scrolled
                   ? "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white"
-                  : pathname === "/"
+                  : (pathname === "/" || pathname?.startsWith("/destinations/"))
                     ? "text-white/80 hover:text-white"
                     : "text-slate-700 hover:text-slate-900 dark:text-white/80 dark:hover:text-white"
               )}
@@ -118,7 +118,7 @@ export default function Navbar() {
               className={cn("p-2 transition-colors",
                 scrolled
                   ? "text-slate-600 dark:text-white/70"
-                  : pathname === "/"
+                  : (pathname === "/" || pathname?.startsWith("/destinations/"))
                     ? "text-white dark:text-white"
                     : "text-slate-700 dark:text-white"
               )}
@@ -130,7 +130,7 @@ export default function Navbar() {
               className={cn("p-2 transition-colors",
                 scrolled
                   ? "text-slate-600 dark:text-white/70"
-                  : pathname === "/"
+                  : (pathname === "/" || pathname?.startsWith("/destinations/"))
                     ? "text-white/70 hover:text-white"
                     : "text-slate-700 dark:text-white/70 hover:text-slate-900 dark:hover:text-white"
               )}
