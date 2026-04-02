@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MapPin, Info, Compass, CheckCircle2, ArrowLeft } from "lucide-react";
+import { MapPin, Info, Compass, CheckCircle2, ArrowLeft, Lightbulb, Calendar } from "lucide-react";
 import { destinations } from "@/data/destinations";
 
 // Generate static params for all destinations
@@ -24,117 +24,175 @@ export default async function DestinationRoute({
   }
 
   return (
-    <div className="pt-20 pb-20 min-h-screen bg-white dark:bg-slate-950">
-      
-      {/* Hero Image Section */}
-      <div className="relative w-full h-[50vh] md:h-[70vh]">
+    <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white font-sans transition-colors duration-300">
+
+      {/* Full-bleed Hero */}
+      <div className="relative w-full h-[60vh] md:h-[80vh] overflow-hidden bg-black">
         <Image
           src={destination.image}
           alt={destination.name}
           fill
           priority
-          className="object-cover"
+          className="object-cover opacity-75"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
-        
-        <div className="absolute top-8 left-4 md:left-12 z-10 w-full max-w-7xl mx-auto">
-          <Link href="/destinations" className="inline-flex items-center gap-2 text-white/90 hover:text-white bg-black/30 hover:bg-black/50 backdrop-blur-md px-4 py-2 rounded-full transition-colors font-medium">
-            <ArrowLeft className="w-5 h-5" /> Back to Destinations
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent" />
+
+        {/* Back button */}
+        <div className="absolute top-28 left-0 right-0 px-8 lg:px-16 z-20">
+          <Link
+            href="/destinations"
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white text-[11px] font-black uppercase tracking-[0.2em] transition-colors group"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1 duration-200" />
+            Back to Destinations
           </Link>
         </div>
 
-        <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 z-10">
-          <div className="max-w-7xl mx-auto flex flex-col items-start gap-4">
-            <span className="bg-primary text-white text-sm font-bold uppercase tracking-wider px-4 py-1.5 rounded-full shadow-md">
-              {destination.category}
-            </span>
-            <h1 className="text-4xl md:text-7xl font-serif font-bold text-white drop-shadow-md">
-              {destination.name}
-            </h1>
-            <p className="text-white/90 text-xl font-medium flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-primary" /> Sri Lanka
-            </p>
-          </div>
+        {/* Hero text — bottom left */}
+        <div className="absolute bottom-0 left-0 right-0 px-8 lg:px-16 pb-12 z-20">
+          <span className="inline-block bg-primary text-white text-[9px] font-black uppercase tracking-[0.25em] px-3 py-1 mb-4">
+            {destination.category}
+          </span>
+          <h1 className="text-5xl sm:text-7xl lg:text-[90px] font-black uppercase tracking-tighter leading-[0.9] text-white mb-4">
+            {destination.name}
+          </h1>
+          <p className="text-white/70 text-sm flex items-center gap-2 font-medium uppercase tracking-widest">
+            <MapPin className="w-4 h-4 text-primary" /> Sri Lanka
+          </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-12">
-            
-            {/* Description */}
-            <section>
-              <h2 className="text-3xl font-serif font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                <Info className="w-8 h-8 text-primary" /> Overview
-              </h2>
-              <div className="prose prose-lg dark:prose-invert text-slate-600 dark:text-slate-300">
-                <p className="leading-relaxed text-balance">
-                  {destination.fullDescription}
-                </p>
-              </div>
-            </section>
+      {/* Page Body */}
+      <div className="max-w-[1400px] mx-auto px-8 lg:px-16 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-1 items-start">
 
-            {/* Activities */}
-            <section>
-              <h2 className="text-3xl font-serif font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                <Compass className="w-8 h-8 text-primary" /> Top Activities
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* ── Main Content ── */}
+          <div className="space-y-1">
+
+            {/* Overview */}
+            <div className="group relative border border-black/5 dark:border-white/8 hover:border-black/15 dark:hover:border-white/20 bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300 p-8 md:p-12">
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" />
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 border border-black/10 dark:border-white/15 flex items-center justify-center">
+                  <Info className="w-4 h-4 text-primary" />
+                </div>
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-500 dark:text-white/40">Overview</h2>
+              </div>
+              <p className="text-slate-600 dark:text-white/60 text-base leading-relaxed">
+                {destination.fullDescription}
+              </p>
+            </div>
+
+            {/* Top Activities */}
+            <div className="group relative border border-black/5 dark:border-white/8 hover:border-black/15 dark:hover:border-white/20 bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300 p-8 md:p-12">
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary/40 group-hover:bg-primary transition-colors duration-300" />
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 border border-black/10 dark:border-white/15 group-hover:border-primary flex items-center justify-center transition-colors duration-300">
+                  <Compass className="w-4 h-4 text-primary" />
+                </div>
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-500 dark:text-white/40">Top Activities</h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                 {destination.activities.map((activity, idx) => (
-                  <div key={idx} className="bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 flex items-start gap-3 shadow-sm">
-                    <CheckCircle2 className="w-6 h-6 text-secondary shrink-0" />
-                    <span className="text-slate-700 dark:text-slate-200 font-medium">{activity}</span>
+                  <div
+                    key={idx}
+                    className="flex items-start gap-4 border border-black/5 dark:border-white/8 p-5 hover:border-black/15 dark:hover:border-white/20 transition-colors duration-200"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-white/70 text-sm font-medium">{activity}</span>
                   </div>
                 ))}
               </div>
-            </section>
+            </div>
 
             {/* Travel Tips */}
-            <section>
-              <div className="bg-sand/30 dark:bg-sand-dark/10 p-8 rounded-2xl border border-sand dark:border-sand-dark/30">
-                <h3 className="text-2xl font-serif font-bold text-slate-900 dark:text-white mb-4">
+            <div className="group relative border border-black/5 dark:border-white/8 hover:border-black/15 dark:hover:border-white/20 bg-white dark:bg-transparent shadow-sm dark:shadow-none transition-colors duration-300 p-8 md:p-12">
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary/40 group-hover:bg-primary transition-colors duration-300" />
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 border border-black/10 dark:border-white/15 group-hover:border-primary flex items-center justify-center transition-colors duration-300">
+                  <Lightbulb className="w-4 h-4 text-primary" />
+                </div>
+                <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-500 dark:text-white/40">
                   Travel Tips for {destination.name}
-                </h3>
-                <ul className="space-y-3">
-                  {destination.travelTips.map((tip, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <div className="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></div>
-                      <span className="text-slate-700 dark:text-slate-300">{tip}</span>
-                    </li>
-                  ))}
-                </ul>
+                </h2>
               </div>
-            </section>
+              <ul className="space-y-4">
+                {destination.travelTips.map((tip, idx) => (
+                  <li key={idx} className="flex items-start gap-4">
+                    <span className="mt-[7px] w-1.5 h-1.5 bg-primary shrink-0 rounded-full" />
+                    <span className="text-slate-600 dark:text-white/60 text-sm leading-relaxed">{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-28 bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800">
-              <h3 className="text-2xl font-serif font-bold text-slate-900 dark:text-white mb-2">
-                Plan Your Visit
+          {/* ── Sidebar ── */}
+          <div className="lg:sticky lg:top-28 space-y-1">
+
+            {/* Plan Your Visit CTA */}
+            <div className="relative border border-black/5 dark:border-white/8 bg-white dark:bg-transparent shadow-sm dark:shadow-none p-8 overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary" />
+              <div className="absolute -right-8 -bottom-8 w-40 h-40 bg-primary/5 rounded-full pointer-events-none" />
+
+              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-primary mb-4 block">
+                Ready to Go?
+              </span>
+              <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white leading-tight mb-3">
+                Plan Your<br />
+                <span className="text-primary">Visit</span>
               </h3>
-              <p className="text-slate-500 dark:text-slate-400 mb-8">
+              <p className="text-slate-500 dark:text-white/40 text-sm leading-relaxed mb-8">
                 Ready to explore {destination.name}? Let us help you organize the perfect trip.
               </p>
-              
-              <Link 
+
+              <Link
                 href={`/book?dest=${destination.id}`}
-                className="w-full bg-primary hover:bg-primary-dark text-white font-semibold text-lg py-4 rounded-xl flex items-center justify-center gap-2 transition-transform hover:scale-105 shadow-lg shadow-primary/30"
+                className="w-full bg-primary hover:bg-primary-dark text-white font-black text-xs uppercase tracking-widest py-4 flex items-center justify-center gap-2 transition-colors duration-300 mb-4"
               >
+                <Calendar className="w-4 h-4" />
                 Inquire Now
               </Link>
-              
-              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400 text-center">
-                Need help deciding? <br/>
-                <Link href="/contact" className="text-primary font-medium hover:underline">Contact our travel experts</Link>
+
+              <div className="pt-4 border-t border-black/5 dark:border-white/8 text-center">
+                <p className="text-[10px] uppercase tracking-wider text-slate-400 dark:text-white/30 mb-2">Need help deciding?</p>
+                <Link
+                  href="/contact"
+                  className="text-xs font-black uppercase tracking-wider text-primary hover:text-primary-dark transition-colors"
+                >
+                  Contact our travel experts
+                </Link>
               </div>
             </div>
-          </div>
 
+            {/* Quick Info panel */}
+            <div className="border border-black/5 dark:border-white/8 bg-white dark:bg-transparent shadow-sm dark:shadow-none p-8">
+              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-white/30 mb-5 block">
+                Quick Info
+              </span>
+              <div className="space-y-4">
+                <div className="flex items-start justify-between gap-4 pb-4 border-b border-black/5 dark:border-white/8">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-white/40 font-bold">Category</span>
+                  <span className="text-[10px] uppercase tracking-wider text-right font-black text-slate-900 dark:text-white">{destination.category}</span>
+                </div>
+                <div className="flex items-start justify-between gap-4 pb-4 border-b border-black/5 dark:border-white/8">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-white/40 font-bold">Location</span>
+                  <span className="text-[10px] uppercase tracking-wider text-right font-black text-slate-900 dark:text-white">Sri Lanka</span>
+                </div>
+                <div className="flex items-start justify-between gap-4">
+                  <span className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-white/40 font-bold">Activities</span>
+                  <span className="text-[10px] uppercase tracking-wider text-right font-black text-primary">{destination.activities.length} Available</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
+
     </div>
   );
 }
