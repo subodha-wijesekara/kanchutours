@@ -21,7 +21,8 @@ import {
   LogOut,
   Users as UsersIcon,
   Activity,
-  Globe
+  Globe,
+  X
 } from "lucide-react";
 
 type UserType = {
@@ -52,6 +53,9 @@ type Submission = {
   date?: string;
   people?: string;
   interest?: string;
+  // Reply specific
+  replyMessage?: string;
+  repliedAt?: string;
 };
 
 export default function AdminPage() {
@@ -66,6 +70,17 @@ export default function AdminPage() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [replyModal, setReplyModal] = useState<{
+    isOpen: boolean;
+    submission: Submission | null;
+    message: string;
+    isSending: boolean;
+  }>({
+    isOpen: false,
+    submission: null,
+    message: "",
+    isSending: false,
+  });
 
   const fetchUser = async () => {
     try {
@@ -145,6 +160,36 @@ export default function AdminPage() {
     }
   };
 
+  const handleReply = async () => {
+    if (!replyModal.submission || !replyModal.message.trim()) return;
+    
+    setReplyModal(prev => ({ ...prev, isSending: true }));
+    try {
+      const response = await fetch('/api/admin/reply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: replyModal.submission._id,
+          type: activeTab === 'contacts' ? 'contact' : 'booking',
+          replyMessage: replyModal.message
+        }),
+      });
+      
+      const result = await response.json();
+      if (result.success) {
+        setReplyModal({ isOpen: false, submission: null, message: "", isSending: false });
+        fetchData();
+      } else {
+        alert(result.message || "Failed to send reply");
+      }
+    } catch (error) {
+      console.error("Reply failed:", error);
+      alert("An error occurred while sending the reply");
+    } finally {
+      setReplyModal(prev => ({ ...prev, isSending: false }));
+    }
+  };
+
   const filteredItems = (activeTab === 'contacts' ? data.contacts : data.bookings).filter(item => 
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     item.email.toLowerCase().includes(searchQuery.toLowerCase())
@@ -162,6 +207,76 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white font-sans pt-32 pb-20 px-6 lg:px-12">
+      <AnimatePresence>
+        {replyModal.isOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              onClick={() => !replyModal.isSending && setReplyModal(prev => ({ ...prev, isOpen: false }))}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm" 
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-2xl bg-white dark:bg-black border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden"
+            >
+              <div className="p-8">
+                <div className="flex items-center justify-between mb-8">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-primary mb-1">Compose Reply</p>
+                    <h3 className="text-2xl font-black uppercase tracking-tight">Response to {replyModal.submission?.name}</h3>
+                  </div>
+                  <button 
+                    onClick={() => setReplyModal(prev => ({ ...prev, isOpen: false }))}
+                    className="p-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors group"
+                  >
+                    <X className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" />
+                  </button>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="bg-slate-50 dark:bg-white/5 p-4 border border-black/5 dark:border-white/5">
+                    <p className="text-[10px] uppercase font-bold text-slate-400 mb-2">Original Inquiry</p>
+                    <p className="text-sm italic text-slate-600 dark:text-white/50">"{replyModal.submission?.message || replyModal.submission?.interest}"</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] uppercase font-bold text-slate-400">Your Message</label>
+                    <textarea 
+                      value={replyModal.message}
+                      onChange={(e) => setReplyModal(prev => ({ ...prev, message: e.target.value }))}
+                      placeholder="Write your professional response here..."
+                      className="w-full h-48 bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 p-4 text-sm focus:outline-none focus:border-primary transition-colors resize-none"
+                    />
+                  </div>
+
+                  <button 
+                    onClick={handleReply}
+                    disabled={replyModal.isSending || !replyModal.message.trim()}
+                    className="w-full bg-primary text-white py-4 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-primary-dark transition-all disabled:opacity-50 flex items-center justify-center gap-3"
+                  >
+                    {replyModal.isSending ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <MessageSquare className="w-4 h-4" />
+                        Send Reply via Email
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-7xl mx-auto">
         
         {/* Top Bar Actions */}
@@ -346,6 +461,9 @@ export default function AdminPage() {
                         {item.status === 'unread' && (
                           <span className="bg-primary/10 text-primary text-[8px] font-black uppercase px-2 py-0.5 tracking-tighter">NEW</span>
                         )}
+                        {item.repliedAt && (
+                          <span className="bg-green-500/10 text-green-500 text-[8px] font-black uppercase px-2 py-0.5 tracking-tighter">REPLIED</span>
+                        )}
                         <span className="text-[10px] text-slate-400 dark:text-white/20 uppercase tracking-widest ml-auto lg:ml-0">
                           {new Date(item.createdAt).toLocaleDateString()} · {new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
@@ -391,6 +509,23 @@ export default function AdminPage() {
                           "{item.message}"
                         </div>
                       )}
+
+                      {/* Reply History */}
+                      {item.replyMessage && (
+                        <div className="bg-primary/5 p-4 border border-primary/10 space-y-2">
+                          <div className="flex items-center justify-between">
+                             <p className="text-[10px] uppercase font-black text-primary tracking-widest flex items-center gap-2">
+                               <MessageSquare className="w-3 h-3" /> Admin Response
+                             </p>
+                             <p className="text-[10px] text-primary/40 uppercase font-black">
+                               {new Date(item.repliedAt!).toLocaleDateString()}
+                             </p>
+                          </div>
+                          <p className="text-sm text-slate-700 dark:text-white/70 leading-relaxed">
+                            {item.replyMessage}
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     {/* Actions */}
@@ -401,6 +536,13 @@ export default function AdminPage() {
                       >
                         <CheckCircle className="w-3.5 h-3.5" />
                         {item.status === 'read' ? 'Mark Unread' : 'Mark Read'}
+                      </button>
+                      <button 
+                        onClick={() => setReplyModal({ isOpen: true, submission: item, message: "", isSending: false })}
+                        className="flex-1 lg:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 hover:border-primary text-[10px] font-black uppercase tracking-widest transition-all"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5 text-primary" />
+                        Reply
                       </button>
                       <button 
                         onClick={() => handleDelete(item._id, activeTab === 'contacts' ? 'contact' : 'booking')}

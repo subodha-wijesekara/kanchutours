@@ -31,6 +31,12 @@ const BookingSubmissionSchema = new mongoose.Schema({
     enum: ['unread', 'read'],
     default: 'unread',
   },
+  replyMessage: {
+    type: String,
+  },
+  repliedAt: {
+    type: Date,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

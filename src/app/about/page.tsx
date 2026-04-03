@@ -167,13 +167,13 @@ export default function AboutPage() {
           {/* Vision */}
           <div className="border border-black/5 dark:border-white/8 p-8 md:p-12 relative group hover:border-black/15 dark:hover:border-white/20 transition-colors duration-300 bg-white dark:bg-transparent shadow-sm dark:shadow-none">
             <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary/40 group-hover:bg-primary transition-colors duration-300" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-4 block">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-white/40 mb-4 block">
               02
             </span>
-            <h3 className="text-2xl font-black uppercase tracking-tight text-white mb-4">
+            <h3 className="text-2xl font-black uppercase tracking-tight text-slate-900 dark:text-white mb-4">
               Our <span className="text-primary">Vision</span>
             </h3>
-            <p className="text-white/50 text-sm leading-relaxed">
+            <p className="text-slate-600 dark:text-white/50 text-sm leading-relaxed">
               To be the most trusted and sought-after travel partner in Sri Lanka, recognized for our commitment to quality, authenticity, and environmental responsibility.
             </p>
           </div>

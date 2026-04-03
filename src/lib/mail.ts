@@ -81,4 +81,39 @@ export const templates = {
       </table>
     </div>
   `,
+
+  adminReply: (name: string, originalMessage: string, replyMessage: string) => `
+    <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eeeeee; background-color: #ffffff; color: #1a1a1a;">
+      <div style="padding: 40px; background-color: #000000; text-align: center;">
+        <h1 style="color: #ff385c; margin: 0; font-size: 24px; letter-spacing: 4px; text-transform: uppercase; font-weight: 900;">Kanchu Tours</h1>
+        <p style="color: #ffffff; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; opacity: 0.7;">Official Response</p>
+      </div>
+
+      <div style="padding: 40px;">
+        <p style="font-size: 16px; color: #888888; margin-bottom: 30px;">Hello ${name},</p>
+        
+        <p style="font-size: 18px; line-height: 1.6; color: #1a1a1a; margin-bottom: 40px; font-weight: 400;">
+          ${replyMessage.replace(/\n/g, '<br />')}
+        </p>
+
+        <div style="background-color: #f9f9f9; padding: 25px; border-left: 2px solid #ff385c; margin-bottom: 40px;">
+          <p style="margin: 0 0 10px 0; font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #888888;">Your Inquiry</p>
+          <p style="margin: 0; font-size: 14px; color: #666666; font-style: italic; line-height: 1.5;">
+            "${originalMessage}"
+          </p>
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eeeeee;">
+          <p style="margin: 0; font-size: 14px; font-weight: bold; color: #1a1a1a;">The Kanchu Tours Team</p>
+          <p style="margin: 5px 0 0 0; font-size: 13px; color: #888888;">Sri Lanka Authentic Travel Experts</p>
+        </div>
+      </div>
+
+      <div style="padding: 20px; background-color: #f8f8f8; text-align: center;">
+        <p style="margin: 0; font-size: 11px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px;">
+          © 2026 Kanchu Tours Sri Lanka · kanchutours.com
+        </p>
+      </div>
+    </div>
+  `,
 };
